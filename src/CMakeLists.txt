@@ -1,0 +1,3 @@
+ADD_EXECUTABLE(tester main)
+
+TARGET_LINK_LIBRARIES(tester dl)
