@@ -12,7 +12,13 @@ void go()
     {
       if(is_prime_int64(i))
       {
-        max = i;
+        if(i > max)
+          max = i;
+      }
+      if(is_prime_int64(target/i))
+      {
+        if(target/i > max)
+          max = i;
       }
     }
   }
