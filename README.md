@@ -1,3 +1,3 @@
 # Project_Euler_C
 
-![](https://projecteuler.net/profile/1BADragon.png)
+![alt text](https://projecteuler.net/profile/1BADragon.png)
