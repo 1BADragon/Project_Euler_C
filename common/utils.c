@@ -1,5 +1,52 @@
 #include <utils.h>
 
+int factors_int64(int64_t val, int64_t **factors)
+{
+  if(val == 0)
+  {
+    return 0;
+  }
+  if(factors != NULL && *factors != NULL)
+    return -1;
+  int count = 0;
+  int size = 2;
+  if(factors != NULL)
+    *factors = calloc(size, sizeof(int64_t));
+  int i;
+  for(i = 1; i*i < val; i++)
+  {
+    if(val % i == 0)
+    {
+      if(factors != NULL)
+      {
+        if(count >= size)
+        {
+          *factors = realloc(*factors, (size*2) * sizeof(int64_t));
+          if(*factors == NULL)
+            return -1;
+          size *= 2;
+        }
+        (*factors)[count] = i;
+        (*factors)[count+1] = val / i;
+      }
+      count += 2;
+    }
+  }
+  if(i*i == val)
+  {
+    if(factors != NULL)
+    {
+      if(count >= size)
+      {
+        *factors = realloc(*factors, (size + 1) * sizeof(int64_t));
+      }
+      (*factors)[count] = i;
+    }
+    count++;
+  }
+  return count;
+}
+
 int is_prime_int64(int64_t val)
 {
   int64_t i;
