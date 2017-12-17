@@ -1,3 +1,3 @@
-ADD_EXECUTABLE(tester main)
+ADD_EXECUTABLE(launcher main)
 
-TARGET_LINK_LIBRARIES(tester dl)
+TARGET_LINK_LIBRARIES(launcher dl)
