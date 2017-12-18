@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dlfcn.h>
-
+#include <string.h>
 
 int main(int argc, char **argv)
 {
@@ -12,8 +12,13 @@ int main(int argc, char **argv)
     exit(1);
   }
 
+  char buf[100];
+  memset(buf, 0, 100);
+
+  snprintf(buf, 100, "solutions/libtest%d.so", atoi(argv[1]));
+
   //Load the library
-  void *sym = dlopen(argv[1], RTLD_NOW);
+  void *sym = dlopen(buf, RTLD_NOW);
   if(sym == NULL)
   {
     printf("dlopen: %s\n", dlerror());
