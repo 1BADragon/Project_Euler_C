@@ -1,5 +1,16 @@
 #include <utils.h>
 
+int64_t sum_int64(int64_t *vals, int n)
+{
+  int64_t total = 0;
+  int i;
+  for(i = 0; i < n; i++)
+  {
+    total += vals[i];
+  }
+  return total;
+}
+
 int factors_int64(int64_t val, int64_t **factors)
 {
   if(val == 0)
@@ -44,6 +55,10 @@ int factors_int64(int64_t val, int64_t **factors)
     }
     count++;
   }
+  if(factors != NULL)
+  {
+    qsort((void *)*factors, count, sizeof(int64_t), int64_cmp);
+  }
   return count;
 }
 
@@ -83,4 +98,27 @@ int is_palandrome(int val)
   }
 
   return 1;
+}
+
+void print_int64_array(int64_t *vals, int n)
+{
+  int i;
+  for(i = 0; i < n; i++)
+  {
+    printf("%ld ", vals[i]);
+  }
+  printf("\n");
+}
+
+int int64_cmp(const void *v1, const void *v2)
+{
+  const int64_t *x1, *x2;
+  x1 = v1;
+  x2 = v2;
+  if(*x1 < *x2)
+    return -1;
+  else if(*x1 == *x2)
+    return 0;
+  else
+    return 1;
 }
