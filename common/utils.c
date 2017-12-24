@@ -130,10 +130,15 @@ int parse_cvs_file(FILE *fin, char ***array_ptr, char delim)
     int array_size = 8;
     int entry_size = 8, entry = 0, entry_index = 0;
     array = calloc(array_size, sizeof(char*));
-    array[0] = calloc(entry_size, sizeof(char));
+
     while((tempc = fgetc(fin)) != EOF)
     {
-        if(entry_index == entry_size)
+        if(entry_index == 0)
+        {
+            entry_size == 8;
+            array[entry] = calloc(entry_size, sizeof(char));
+        }
+        else if(entry_index == entry_size)
         {
             entry_size *= 2;
             array[entry] = (char *)realloc(array[entry], sizeof(char) * entry_size);
@@ -145,13 +150,16 @@ int parse_cvs_file(FILE *fin, char ***array_ptr, char delim)
             if(entry == array_size)
             {
                 array_size *= 2;
-                array = (char *)realloc(array, sizeof(char *) * array_size);
+                array = (char **)realloc(array, sizeof(char *) * array_size);
             }
+            entry_index = 0;
         }
         else
         {
             array[entry][entry_index] = tempc;
-        }
-        entry_index++;
+            entry_index++;
+        }        
     }
+    *array_ptr = array;
+    return entry + 1;
 }
