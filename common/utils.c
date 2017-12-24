@@ -122,3 +122,36 @@ int int64_cmp(const void *v1, const void *v2)
   else
     return 1;
 }
+
+int parse_cvs_file(FILE *fin, char ***array_ptr, char delim)
+{
+    char **array = *array_ptr;
+    char tempc;
+    int array_size = 8;
+    int entry_size = 8, entry = 0, entry_index = 0;
+    array = calloc(array_size, sizeof(char*));
+    array[0] = calloc(entry_size, sizeof(char));
+    while((tempc = fgetc(fin)) != EOF)
+    {
+        if(entry_index == entry_size)
+        {
+            entry_size *= 2;
+            array[entry] = (char *)realloc(array[entry], sizeof(char) * entry_size);
+        }
+        if(tempc == delim)
+        {
+            array[entry][entry_index] = '\0'; //NULL Terminate the current entry
+            entry++;
+            if(entry == array_size)
+            {
+                array_size *= 2;
+                array = (char *)realloc(array, sizeof(char *) * array_size);
+            }
+        }
+        else
+        {
+            array[entry][entry_index] = tempc;
+        }
+        entry_index++;
+    }
+}

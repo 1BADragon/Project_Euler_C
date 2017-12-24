@@ -12,7 +12,8 @@ int factors_int64(int64_t val, int64_t **factors);
 int64_t sum_int64(int64_t *vals, int n);
 void print_int64_array(int64_t *vals, int n);
 void sort_int64_array(int64_t *vals, int n);
+int parse_cvs_file(FILE *fin, char ***array_ptr);
 
-int int64_cmp(const void *v1, const void *v2);
+int int64_cmp(const void *v1, const void *v2, char delim);
 
 #endif
