@@ -6,6 +6,12 @@
 #include <math.h>
 #include <stdio.h>
 
+typedef int bool;
+#undef TRUE
+#define TRUE 1
+#undef FALSE
+#define FALSE 0
+
 int is_prime_int64(int64_t val);
 int is_palandrome(int val);
 int factors_int64(int64_t val, int64_t **factors);

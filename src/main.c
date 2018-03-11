@@ -15,7 +15,7 @@ int main(int argc, char **argv)
   char buf[100];
   memset(buf, 0, 100);
 
-#if __elf__
+#if __unix
   snprintf(buf, 100, "solutions/libtest%d.so", atoi(argv[1]));
 #else
   snprintf(buf, 100, "solutions/libtest%d.dll", atoi(argv[1]));
