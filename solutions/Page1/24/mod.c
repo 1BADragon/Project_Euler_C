@@ -22,14 +22,15 @@ int64_t int64_ceil(double val)
 
 void perm(int64_t *numbers, int64_t *ret, int64_t ret_size, int64_t curr, int64_t perm_c)
 {
-    if(ret_size == 0)
+    if(ret_size == 1)
     {
+        ret[0] = numbers[0];
         return;
     }
     int64_t index = int64_ceil(((double)perm_c/(double)fact(ret_size))*ret_size)-1;
     printf("index: %ld, retsize: %ld\n", index, ret_size);
     int64_t val = numbers[index];
-    ret[curr] = val;
+    ret[0] = val;
 
     int64_t *ret_nums = calloc(ret_size-1, sizeof(int64_t));
 
