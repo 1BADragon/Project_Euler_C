@@ -24,10 +24,10 @@ void go()
     exit(1);
   }
 
-  int num_names = parse_cvs_file(fin, &names, ',');
+  size_t num_names = parse_cvs_file(fin, &names, ',');
 
   fclose(fin);
-  int i,j;
+  size_t i,j;
   qsort(names, num_names, sizeof(char *), cmp_func);
 
   mpz_t total;

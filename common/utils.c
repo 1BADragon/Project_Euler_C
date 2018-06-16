@@ -135,7 +135,7 @@ int parse_cvs_file(FILE *fin, char ***array_ptr, char delim)
     {
         if(entry_index == 0)
         {
-            entry_size == 8;
+            entry_size = 8;
             array[entry] = calloc(entry_size, sizeof(char));
         }
         else if(entry_index == entry_size)

@@ -14,7 +14,7 @@ void go()
   gmp_snprintf(digits, num_digits+1, "%Zd", total);
   mpz_t sum;
   mpz_init(sum);
-  int i;
+  size_t i;
   for(i = 0; i < num_digits-1; i++)
   {
     //printf("%d\n", digits[i] - '0');
