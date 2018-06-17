@@ -1,26 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <inttypes.h>
-#include <gmp.h>
 
 void go()
 {
-    mpf_t value;
-    mpz_t num, dem;
-    mpf_init2(value, 100000);
+    int sequenceLength = 0;
+    int num = 0;
 
-    mpz_init_set_ui(num, 1);
-    mpz_init(dem);
-
-    size_t max_rep_value = 0;
-    size_t answer = 0;
-
-    for(int i = 2; i < 1000; ++i)
+    for (int i = 1000; i > 1; --i)
     {
-        mpf_set_ui(value, 1);
-        mpf_div_ui(value, value, i);
-        gmp_printf("%.*Ff\n", 250, value);
+        if (sequenceLength >= i)
+        {
+            break;
+        }
+
+        int *foundRemainders = calloc(i, sizeof(int));
+        int value = 1;
+        int position = 0;
+
+        while (foundRemainders[value] == 0 && value != 0)
+        {
+            foundRemainders[value] = position;
+            value = value * 10;
+            value = value % i;
+            position++;
+        }
+
+        if (position - foundRemainders[value] > sequenceLength)
+        {
+            num = i;
+            sequenceLength = position - foundRemainders[value];
+        }
+
+        free(foundRemainders);
     }
 
-    gmp_printf("Answer: %zd with %zd\n", max_rep_value, answer);
+    printf("Answer: %d(%d)\n", num, sequenceLength);
 }
