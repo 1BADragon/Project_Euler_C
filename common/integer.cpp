@@ -62,6 +62,22 @@ Integer &Integer::operator =(const Integer &other)
     return *this;
 }
 
+Integer Integer::operator -()
+{
+    mpz_t neg;
+    mpz_init(neg);
+    mpz_neg(neg, _value);
+    return neg;
+}
+
+Integer Integer::operator ~()
+{
+    mpz_t not_ret;
+    mpz_init(not_ret);
+    mpz_com(not_ret, _value);
+    return not_ret;
+}
+
 Integer Integer::operator +(const Integer &other)
 {
     mpz_t sum;
@@ -102,6 +118,30 @@ Integer Integer::operator %(const Integer &other)
     return mod;
 }
 
+Integer Integer::operator ^(const Integer &other)
+{
+    mpz_t xor_ret;
+    mpz_init(xor_ret);
+    mpz_xor(xor_ret, _value, other._value);
+    return xor_ret;
+}
+
+Integer Integer::operator &(const Integer &other)
+{
+    mpz_t and_ret;
+    mpz_init(and_ret);
+    mpz_and(and_ret, _value, other._value);
+    return and_ret;
+}
+
+Integer Integer::operator |(const Integer &other)
+{
+    mpz_t or_ret;
+    mpz_init(or_ret);
+    mpz_ior(or_ret, _value, other._value);
+    return or_ret;
+}
+
 Integer &Integer::operator +=(const Integer &other)
 {
     mpz_add(_value, _value, other._value);
@@ -132,6 +172,24 @@ Integer &Integer::operator %=(const Integer &other)
     return *this;
 }
 
+Integer &Integer::operator ^=(const Integer &other)
+{
+    mpz_xor(_value, _value, other._value);
+    return *this;
+}
+
+Integer &Integer::operator &=(const Integer &other)
+{
+    mpz_and(_value, _value, other._value);
+    return *this;
+}
+
+Integer &Integer::operator |=(const Integer &other)
+{
+    mpz_ior(_value, _value, other._value);
+    return *this;
+}
+
 Integer &Integer::operator ++()
 {
     mpz_add_ui(_value, _value, 1);
@@ -152,4 +210,57 @@ Integer &Integer::operator --()
 Integer Integer::operator --(int)
 {
     return --(*this);
+}
+
+bool Integer::operator ==(const Integer &other)
+{
+    return mpz_cmp(_value, other._value) == 0;
+}
+
+bool Integer::operator !=(const Integer &other)
+{
+    return mpz_cmp(_value, other._value) != 0;
+}
+
+bool Integer::operator <(const Integer &other)
+{
+    return mpz_cmp(_value, other._value) < 0;
+}
+
+bool Integer::operator >(const Integer &other)
+{
+    return mpz_cmp(_value, other._value) > 0;
+}
+
+bool Integer::operator <=(const Integer &other)
+{
+    return mpz_cmp(_value, other._value) <= 0;
+}
+
+bool Integer::operator >=(const Integer &other)
+{
+    return mpz_cmp(_value, other._value) >= 0;
+}
+
+std::string Integer::get_string()
+{
+    std::size_t digit_count = mpz_sizeinbase(_value, 10) + 1;
+    std::vector<char> digits;
+    digits.reserve(digit_count);
+
+    gmp_snprintf(digits.data(), digit_count, "%Zd", _value);
+
+    return std::string(digits.data());
+}
+
+std::ostream &operator <<(std::ostream &os, Integer &other)
+{
+    os << other.get_string();
+
+    return os;
+}
+
+void Integer::operator <<(std::ostream &ostr)
+{
+    ostr << get_string();
 }
