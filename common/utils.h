@@ -15,6 +15,9 @@ typedef int bool;
 #define FALSE 0
 #endif
 
+#define print_symbol(x) \
+    std::cout << #x ": "<< x << std::endl;
+
 int is_prime_int64(int64_t val);
 int is_palandrome(int val);
 int factors_int64(int64_t val, int64_t **factors);

@@ -62,7 +62,7 @@ Integer &Integer::operator =(const Integer &other)
     return *this;
 }
 
-Integer Integer::operator -()
+Integer Integer::operator -() const
 {
     mpz_t neg;
     mpz_init(neg);
@@ -70,7 +70,7 @@ Integer Integer::operator -()
     return neg;
 }
 
-Integer Integer::operator ~()
+Integer Integer::operator ~() const
 {
     mpz_t not_ret;
     mpz_init(not_ret);
@@ -78,7 +78,7 @@ Integer Integer::operator ~()
     return not_ret;
 }
 
-Integer Integer::operator +(const Integer &other)
+Integer Integer::operator +(const Integer &other) const
 {
     mpz_t sum;
     mpz_init(sum);
@@ -86,7 +86,7 @@ Integer Integer::operator +(const Integer &other)
     return sum;
 }
 
-Integer Integer::operator -(const Integer &other)
+Integer Integer::operator -(const Integer &other) const
 {
     mpz_t dif;
     mpz_init(dif);
@@ -94,7 +94,7 @@ Integer Integer::operator -(const Integer &other)
     return dif;
 }
 
-Integer Integer::operator *(const Integer &other)
+Integer Integer::operator *(const Integer &other) const
 {
     mpz_t prod;
     mpz_init(prod);
@@ -102,7 +102,7 @@ Integer Integer::operator *(const Integer &other)
     return prod;
 }
 
-Integer Integer::operator /(const Integer &other)
+Integer Integer::operator /(const Integer &other) const
 {
     mpz_t q;
     mpz_init(q);
@@ -110,7 +110,7 @@ Integer Integer::operator /(const Integer &other)
     return q;
 }
 
-Integer Integer::operator %(const Integer &other)
+Integer Integer::operator %(const Integer &other) const
 {
     mpz_t mod;
     mpz_init(mod);
@@ -118,7 +118,7 @@ Integer Integer::operator %(const Integer &other)
     return mod;
 }
 
-Integer Integer::operator ^(const Integer &other)
+Integer Integer::operator ^(const Integer &other) const
 {
     mpz_t xor_ret;
     mpz_init(xor_ret);
@@ -126,7 +126,7 @@ Integer Integer::operator ^(const Integer &other)
     return xor_ret;
 }
 
-Integer Integer::operator &(const Integer &other)
+Integer Integer::operator &(const Integer &other) const
 {
     mpz_t and_ret;
     mpz_init(and_ret);
@@ -134,7 +134,7 @@ Integer Integer::operator &(const Integer &other)
     return and_ret;
 }
 
-Integer Integer::operator |(const Integer &other)
+Integer Integer::operator |(const Integer &other) const
 {
     mpz_t or_ret;
     mpz_init(or_ret);
@@ -212,37 +212,53 @@ Integer Integer::operator --(int)
     return --(*this);
 }
 
-bool Integer::operator ==(const Integer &other)
+bool Integer::operator ==(const Integer &other) const
 {
     return mpz_cmp(_value, other._value) == 0;
 }
 
-bool Integer::operator !=(const Integer &other)
+bool Integer::operator !=(const Integer &other) const
 {
     return mpz_cmp(_value, other._value) != 0;
 }
 
-bool Integer::operator <(const Integer &other)
+bool Integer::operator <(const Integer &other) const
 {
     return mpz_cmp(_value, other._value) < 0;
 }
 
-bool Integer::operator >(const Integer &other)
+bool Integer::operator >(const Integer &other) const
 {
     return mpz_cmp(_value, other._value) > 0;
 }
 
-bool Integer::operator <=(const Integer &other)
+bool Integer::operator <=(const Integer &other) const
 {
     return mpz_cmp(_value, other._value) <= 0;
 }
 
-bool Integer::operator >=(const Integer &other)
+bool Integer::operator >=(const Integer &other) const
 {
     return mpz_cmp(_value, other._value) >= 0;
 }
 
-std::string Integer::get_string()
+Integer Integer::pow(unsigned long a) const
+{
+    mpz_t ret;
+    mpz_init(ret);
+    mpz_pow_ui(ret, this->_value, a);
+    return ret;
+}
+
+Integer Integer::pow(unsigned long a, unsigned long b)
+{
+    mpz_t ret;
+    mpz_init(ret);
+    mpz_ui_pow_ui(ret, a, b);
+    return ret;
+}
+
+std::string Integer::get_string() const
 {
     std::size_t digit_count = mpz_sizeinbase(_value, 10) + 1;
     std::vector<char> digits;
